@@ -1,8 +1,9 @@
 import {Image, ScrollView, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Link } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../constants';
+import Button from "../components/CustomButton";
+
 
 
 
@@ -33,9 +34,14 @@ export default function HomeScreen() {
             />
           </View>
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">Where Innovation is imminent: A journey with Roar</Text>
-          
+          <Button
+            title="Continue with Email"
+            handlePress={() => router.push("/sign-in")}
+            containerStyles="w-full mt-7"
+          />
         </View>
       </ScrollView>
+      <StatusBar  backgroundColor='#161622' style='light'/>
      </SafeAreaView>
   );
 }
