@@ -6,13 +6,14 @@ import FormField from '../../components/FormField'
 import { useState } from 'react'
 import Button from '../../components/CustomButton'
 import { Link, router } from 'expo-router'
-import { createUser, signIn } from '../../lib/appwrite'
+import { createUser} from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 
 const SignUp = () => {
-
+  const {setUser, setisLoggedIn} = useGlobalContext();
   const [form, setform] = useState({
-    userName: '',
+    username: '',
     email: '',
     password: '' 
   })
@@ -20,13 +21,15 @@ const SignUp = () => {
   const [isSubmitting, setisSubmitting] = useState(false)
 
  const submit = async () => {
-  if(!form.email || !form.password || !form.userName) {
+  if(!form.email || !form.password || !form.username) {
     Alert.alert('Error', 'Please fill in the details in all fields')
   }
   setisSubmitting(true);
   try {
-    const result = await createUser(form.email, form.password, form.userName)
+    const result = await createUser(form.email, form.password, form.username)
       // set it to global state later.
+        setUser(result)
+        setisLoggedIn(true)
       router.replace('/home')
   } catch (error) {
     Alert.alert('Error', error.message)
@@ -46,7 +49,7 @@ const SignUp = () => {
         </Text>
         <FormField 
         title="Username"
-        value={form.userName}
+        value={form.username}
         handleChangeText={(e) => setform({
           ...form,
           userName: e })}
